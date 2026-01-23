@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Ravy - Full Stack Developer and Creative Coder.">
+  <title>Ravy | Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">
+          <img src="me.png" alt="Ravy Logo">
+          abdr501
+        </a>
+        <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-links">
+          <a href="#projects" data-i18n="nav.work">Work</a>
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+          <button id="lang-toggle" class="btn"
+            style="padding: 0.5rem 1rem; font-size: 0.85rem; margin-left: 1rem; background: var(--accent-primary); color: white;">العربية</button>
+          <button id="theme-toggle" class="btn"
+            style="padding: 0.5rem 0.75rem; font-size: 1.1rem; margin-left: 0.5rem; background: transparent; color: var(--text-primary); box-shadow: none;">
+            🌙
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img src="me.png" alt="Abdulrahman Alenezi" class="hero-image">
+      <div class="hero-content">
+        <h1 data-i18n="hero.title">ABDULRAHMAN ALENEZI</h1>
+        <p class="hero-subtitle" data-i18n="hero.subtitle">Tech Enthusiast & Full Stack Developer</p>
+        <p style="max-width: 600px; margin: 0 auto 2rem auto; color: var(--text-secondary);" data-i18n="hero.bio">
+          A 21 year old Saudi tech enthusiast with over 7 years of programming experience and a passion for networking.
+          Dedicated to supporting the Arab community in the world of technology.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <a href="#projects" class="btn" data-i18n="hero.cta">View My Work</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2 data-i18n="projects.title">Selected Works</h2>
+        <div class="projects-grid">
+          <!-- Projects rendered dynamically by script.js -->
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <h2 data-i18n="about.title">About Me</h2>
+        <div style="max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+          <div style="text-align: center; margin-bottom: 3rem;">
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;" data-i18n="about.timeline">
+              <strong>2019 - 2026:</strong> Flexible with popular programming languages, controlling projects alone and
+              with teams.
+            </p>
+          </div>
+
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: inherit;">
+            <div>
+              <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-primary);"
+                data-i18n="about.skills.network">Network & OS</h3>
+              <ul style="list-style: disc; padding-left: 1.5rem;">
+                <li>Cisco Packet Tracer</li>
+                <li>Nmap</li>
+                <li>Linux</li>
+              </ul>
+            </div>
+            <div>
+              <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-primary);"
+                data-i18n="about.skills.dev">Development</h3>
+              <ul style="list-style: disc; padding-left: 1.5rem;">
+                <li>JavaScript (JS)</li>
+                <li>Python (Py)</li>
+                <li>Rust (Rs)</li>
+                <li>UI/UX (Figma)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 data-i18n="contact.title">Let's Connect</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;" data-i18n="contact.subtitle">Interested in working
+          together? Drop me a line.
+        </p>
+        <a href="mailto:0xravy@gmail.com" class="btn" data-i18n="contact.cta">Say Hello</a>
+
+        <div class="social-links">
+          <a href="https://github.com/0xravy" class="social-link" target="_blank" aria-label="GitHub">GitHub</a>
+          <a href="https://twitter.com/0xravy" class="social-link" target="_blank" aria-label="Twitter">X/Twitter</a>
+          <a href="https://instagram.com/0xravy" class="social-link" target="_blank"
+            aria-label="Instagram">Instagram</a>
+          <a href="https://youtube.com/@0xravy" class="social-link" target="_blank" aria-label="YouTube">YouTube</a>
+          <a href="https://twitch.tv/0xravy" class="social-link" style="margin-left: 1rem;" target="_blank"
+            aria-label="Twitch">Twitch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p data-i18n="footer.copyright">© 2026 abdr501. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
