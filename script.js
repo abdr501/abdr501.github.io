@@ -13,10 +13,10 @@ const translations = {
             source: "Source Code",
             link: "Live Link",
             items: {
-                incube: {
-                    title: "0xInCube",
-                    desc: "Website to support the Arabic community in sharing experience. (Work In Progress)"
-                },
+                // incube: {
+                //     title: "0xInCube",
+                //     desc: "Website to support the Arabic community in sharing experience. (Work In Progress)"
+                // },
                 ascii: {
                     title: "ASCII art to code",
                     desc: "A tool to convert ASCII text art into code strings."
@@ -63,10 +63,10 @@ const translations = {
             source: "الكود المصدري",
             link: "رابط مباشر",
             items: {
-                incube: {
-                    title: "0xInCube",
-                    desc: "موقع لدعم المجتمع العربي في تبادل الخبرات. (قيد التنفيذ)"
-                },
+                // incube: {
+                //     title: "0xInCube",
+                //     desc: "موقع لدعم المجتمع العربي في تبادل الخبرات. (قيد التنفيذ)"
+                // },
                 ascii: {
                     title: "ASCII art to code",
                     desc: "أداة لتحويل فن ASCII إلى نصوص برمجية."
@@ -101,25 +101,68 @@ const translations = {
     }
 };
 const projectsData = [
-    {
-        id: 'incube',
-        tags: ['community', 'education', '2025'],
-        sourceLink: '#',
-        liveLink: '#',
-    },
+    // {
+    //     id: 'incube',
+    //     tags: ['community', 'education', '2025'],
+    //     sourceLink: '#',
+    //     liveLink: '#',
+    // },
     {
         id: 'ascii',
         tags: ['tool', 'converter'],
-        sourceLink: '#',
-        liveLink: null,
+        sourceLink: 'https://github.com/abdr501/Local-web-ascii-to-code',
+        liveLink: 'https://abdr501.github.io/Local-web-ascii-to-code/',
     },
     {
         id: 'gold',
         tags: ['management', 'pdf', '2024'],
-        sourceLink: null,
-        liveLink: '#',
+        sourceLink: 'https://github.com/abdr501/gold-app',
+        liveLink: 'https://abdr501.github.io/gold-app/src/',
     }
 ];
+
+const socialLinksData = [
+    {
+        name: 'LinkedIn',
+        url: 'https://www.linkedin.com/in/abdulrahman-alenezi',
+        ariaLabel: 'LinkedIn',
+        icon: 'LinkedIn'
+    },
+    {
+        name: 'GitHub',
+        url: 'https://github.com/abdr501',
+        ariaLabel: 'GitHub',
+        icon: 'GitHub'
+    },
+    // {
+    //     name: 'X/Twitter',
+    //     url: 'https://twitter.com/abdr501',
+    //     ariaLabel: 'Twitter',
+    //     icon: 'X/Twitter'
+    // },
+    // {
+    //     name: 'Instagram',
+    //     url: 'https://instagram.com/abdr501',
+    //     ariaLabel: 'Instagram',
+    //     icon: 'Instagram'
+    // },
+    {
+        name: 'YouTube',
+        url: 'https://youtube.com/@abdr501',
+        ariaLabel: 'YouTube',
+        icon: 'YouTube'
+    },
+    // {
+    //     name: 'Twitch',
+    //     url: 'https://twitch.tv/abdr501',
+    //     ariaLabel: 'Twitch',
+    //     icon: 'Twitch',
+    //     style: 'margin-left: 1rem;'
+    // }
+];
+const contactConfig = {
+    email: 'abdulrahman.alenezi.0x@gmail.com'
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     // Language Toggle
@@ -134,6 +177,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load saved theme
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
+
+    setTheme(savedTheme);
+
+    renderSocialLinks();
+    renderContactEmail();
 
     if (langToggle) {
         langToggle.addEventListener('click', () => {
@@ -150,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
     }
 
@@ -158,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             menuToggle?.classList.remove('active');
             navLinks?.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
 
@@ -221,10 +271,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let linksHtml = '';
             if (project.sourceLink) {
-                linksHtml += `<a href="${project.sourceLink}" class="btn btn-sm">${t.source}</a>`;
+                linksHtml += `<a href="${project.sourceLink}" class="btn btn-sm" target="_blank">${t.source}</a>`;
             }
             if (project.liveLink) {
-                linksHtml += `<a href="${project.liveLink}" class="btn btn-sm">${t.link}</a>`;
+                linksHtml += `<a href="${project.liveLink}" class="btn btn-sm" target="_blank">${t.link}</a>`;
             }
 
             return `
@@ -250,6 +300,29 @@ document.addEventListener('DOMContentLoaded', () => {
             observer.observe(card);
         });
     }
+
+    function renderSocialLinks() {
+        const container = document.querySelector('.social-links');
+        if (!container) return;
+
+        container.innerHTML = socialLinksData.map(link => `
+            <a href="${link.url}" 
+               class="social-link" 
+               target="_blank" 
+               aria-label="${link.ariaLabel}"
+               ${link.style ? `style="${link.style}"` : ''}>
+               ${link.icon}
+            </a>
+        `).join('');
+    }
+
+    function renderContactEmail() {
+        const contactBtn = document.getElementById('contact-email-btn');
+        if (contactBtn) {
+            contactBtn.href = `mailto:${contactConfig.email}`;
+        }
+    }
+
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
