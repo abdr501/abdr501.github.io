@@ -9,7 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <script defer src="scripts/script.js"></script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
     <div class="container">
       <nav>
         <a href="#" class="logo">
-          <img src="me.png" alt="ABDULRAHMAN ALENEZI Logo">
+          <img src="images/me.png" alt="ABDULRAHMAN ALENEZI Logo">
           abdr501
         </a>
         <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
@@ -42,14 +43,11 @@
 
   <main>
     <section class="hero">
-      <img src="me.png" alt="Abdulrahman Alenezi" class="hero-image">
+      <img src="images/me.png" alt="Abdulrahman Alenezi" class="hero-image">
       <div class="hero-content">
         <h1 data-i18n="hero.title">ABDULRAHMAN ALENEZI</h1>
         <p class="hero-subtitle" data-i18n="hero.subtitle">Tech Enthusiast & Full Stack Developer</p>
-        <p style="max-width: 600px; margin: 0 auto 2rem auto; color: var(--text-secondary);" data-i18n="hero.bio">
-          A 21 year old Saudi tech enthusiast with over 7 years of programming experience and a passion for networking.
-          Dedicated to supporting the Arab community in the world of technology.
-        </p>
+        <p style="max-width: 600px; margin: 0 auto 2rem auto; color: var(--text-secondary);" data-i18n="hero.bio"></p>
         <div style="display: flex; gap: 1rem; justify-content: center;">
           <a href="#projects" class="btn" data-i18n="hero.cta">View My Work</a>
         </div>
@@ -82,7 +80,7 @@
               <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-primary);"
                 data-i18n="about.skills.network">Network & OS</h3>
               <ul style="list-style: disc; padding-left: 1.5rem;">
-                <li><a target="_blank" href="https://www.netacad.com/cisco-packet-tracer">Cisco Packet Tracer</a></li>
+								<li><a target="_blank" href="https://www.netacad.com/cisco-packet-tracer">Cisco Packet Tracer</a></li>
 								<li><a target="_blank" href="https://www.wireshark.org">Wireshark</a></li>
 								<li><a target="_blank" href="https://nmap.org">Nmap</a></li>
 								<li><a target="_blank" href="https://www.redhat.com">Linux (Redhat,Fedora)</a></li>
@@ -125,7 +123,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
 </body>
 
 </html>

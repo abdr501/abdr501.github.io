@@ -521,15 +521,12 @@ footer {
         left: 0;
         width: 100%;
         height: 100vh;
-        /* Ensure full viewport height */
         background: rgba(255, 255, 255, 0.95);
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 3rem;
         padding: 2rem;
-        padding-bottom: 80px;
-        /* Added padding bottom */
         transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         z-index: 1000;
         backdrop-filter: blur(20px);
@@ -612,4 +609,107 @@ footer {
     [lang="ar"] .hero-content {
         text-align: center;
     }
+}
+
+
+
+.project-slider,
+.slider-thumbnails {
+    direction: ltr;
+}
+
+.project-slider {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.slider-wrapper {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slider-image {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    display: block;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+
+    opacity: 1;
+    transform: scale(1);
+}
+
+.slider-image.changing {
+    opacity: .3;
+    transform: scale(0.97);
+}
+
+.slider-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    background: rgba(0,0,0,.5);
+    color: white;
+
+    font-size: 18px;
+    z-index: 10;
+}
+
+.slider-btn:hover{
+    background: rgba(0,0,0,.8);
+}
+
+.slider-btn.prev{
+    left:10px;
+}
+
+.slider-btn.next{
+    right:10px;
+}
+
+.slider-thumbnails{
+    margin-top:12px;
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.slider-thumb{
+    width:55px;
+    height:40px;
+
+    object-fit:cover;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    opacity:.45;
+
+    transition:all .25s ease;
+
+    border:2px solid transparent;
+}
+
+.slider-thumb:hover{
+    opacity:.8;
+}
+
+.slider-thumb.active{
+    opacity:1;
+    transform:scale(1.08);
+    border-color:var(--accent-primary);
 }

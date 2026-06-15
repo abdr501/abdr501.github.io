@@ -4,7 +4,7 @@ const translations = {
 		hero: {
 			title: "ABDULRAHMAN ALENEZI",
 			subtitle: "Tech Enthusiast & Full Stack Developer",
-			bio: "A 21 year old Saudi tech enthusiast with over 7 years of programming experience and a passion for networking. Dedicated to supporting the Arab community in the world of technology.",
+			bio: "A tech and computer networks enthusiast whose programming journey began in 2019. I am always keen to keep pace with rapid technological advancements and continuously develop my skills with the latest technologies, aiming to build and manage advanced infrastructures and systems.",
 			cta: "View My Work",
 			blog: "Blog"
 		},
@@ -17,13 +17,21 @@ const translations = {
 				//     title: "0xInCube",
 				//     desc: "Website to support the Arabic community in sharing experience. (Work In Progress)"
 				// },
-				ascii: {
-					title: "ASCII art to code",
-					desc: "A tool to convert ASCII text art into code strings."
+				call: {
+					title: "Private Call App WebRTC",
+					desc: "A private local video communication program designed and operated at the Technical College in Medina."
 				},
 				gold: {
 					title: "Gold Store Management",
 					desc: "App for gold stores to manage customer data and export as PDF."
+				},
+				college: {
+					title: "College Network Graduation",
+					desc: "Graduation project for the field of networks: a secure network that supports many protocols."
+				},
+				atraltamayuz: {
+					title: "ATR Management Consulting",
+					desc: "A leading strategic partner in providing management consulting, building institutional capacity, and creating a sustainable impact for organizations in the for-profit and non-profit sectors."
 				}
 			},
 			tags: {
@@ -54,7 +62,7 @@ const translations = {
 		hero: {
 			title: "عبدالرحمن العنزي",
 			subtitle: "شغوف بالتقنية ومطور شامل",
-			bio: "شاب سعودي عمري 21 سنة، لدي شغف كبير بالتقنية وخبرة تزيد عن 7 سنوات في البرمجة والشبكات. مكرس جهودي لدعم المجتمع العربي في عالم التكنولوجيا.",
+			bio: "مهتم وشغوف بالتقنية وشبكات الحاسب، بدأت رحلتي في عالم البرمجة عام 2019. أحرص دائماً على مواكبة التطور التقني السريع وتطوير مهاراتي باستمرار مع أحدث التقنيات، بهدف بناء وإدارة بنى تحتية وأنظمة متطورة.",
 			cta: "شاهد أعمالي",
 			blog: "المدونة"
 		},
@@ -67,13 +75,21 @@ const translations = {
 				//     title: "0xInCube",
 				//     desc: "موقع لدعم المجتمع العربي في تبادل الخبرات. (قيد التنفيذ)"
 				// },
-				ascii: {
-					title: "ASCII art to code",
-					desc: "أداة لتحويل فن ASCII إلى نصوص برمجية."
+				call: {
+					title: "Private Call App WebRTC",
+					desc: "برنامج اتصال محلي خاص مرئي تم تصميمه وتشغيله في الكلية التقنية بالمدينة المنورة."
 				},
 				gold: {
 					title: "Gold Store Management",
 					desc: "تطبيق لمحلات الذهب لإدارة بيانات العملاء والتصدير كملف PDF."
+				},
+				college: {
+					title: "College Network Graduation",
+					desc: "مشروع تخرج في مجال الشبكات: شبكة آمنة تدعم العديد من البروتوكولات."
+				},
+				atraltamayuz: {
+					title: "أطر التميز",
+					desc: "شريكًا استراتيجيًا رائدًا في تقديم الاستشارات الإدارية، وبناء القدرات المؤسسية، وصناعة الأثر المستدام للمنظمات في القطاعين الربحي وغير الربحي."
 				}
 			},
 			tags: {
@@ -108,16 +124,41 @@ const projectsData = [
 	//     liveLink: '#',
 	// },
 	{
-		id: 'ascii',
-		tags: ['tool', 'converter'],
-		sourceLink: 'https://github.com/abdr501/Local-web-ascii-to-code',
-		liveLink: 'https://abdr501.github.io/Local-web-ascii-to-code/',
+		id: 'call',
+		tags: ['Call', 'WEB', '2025'],
+		images: [
+			'images/private-call-app-webrtc/s1.png',
+			'images/private-call-app-webrtc/s2.png'],
 	},
 	{
 		id: 'gold',
-		tags: ['management', 'pdf', '2024'],
+		tags: ['Management', 'PDF', 'WEB', '2024'],
 		sourceLink: 'https://github.com/abdr501/gold-app',
-		liveLink: 'https://abdr501.github.io/gold-app/src/',
+		liveLink: 'https://abdr501.github.io/gold-app/src',
+		images: [
+			'images/gold-store-management/s1.png',
+			'images/gold-store-management/s2.png',
+			'images/gold-store-management/s3.png'],
+	},
+	{
+		id: 'college',
+		tags: ['Networking', 'PKT', '2026'],
+		sourceLink: 'https://github.com/abdr501/collage-project',
+		images: [
+			'images/college-project/s1.png',
+			'images/college-project/s2.png',
+			'images/college-project/s3.png',
+			'images/college-project/s4.png'],
+	},
+	{
+		id: 'atraltamayuz',
+		tags: ['Framer', 'UI/UX', '2026'],
+		liveLink: 'https://atraltamayuz.com',
+		images: [
+			'images/atr-management/s1.png',
+			'images/atr-management/s2.png',
+			'images/atr-management/s3.png',
+			'images/atr-management/s4.png'],
 	}
 ];
 
@@ -277,11 +318,45 @@ document.addEventListener('DOMContentLoaded', () => {
 				linksHtml += `<a href="${project.liveLink}" class="btn btn-sm" target="_blank">${t.link}</a>`;
 			}
 
+			const sliderHtml = `
+			<div class="project-slider">
+
+					<div class="slider-wrapper">
+							<img src="${project.images[0]}" class="slider-image">
+					</div>
+
+					${project.images.length > 1
+					? `
+							<button class="slider-btn prev">❮</button>
+							<button class="slider-btn next">❯</button>
+
+							<div class="slider-thumbnails">
+									${project.images.map((img, index) => `
+											<img
+													src="${img}"
+													class="slider-thumb ${index === 0 ? 'active' : ''}"
+													data-index="${index}"
+											>
+									`).join('')}
+							</div>
+							`
+					: ''
+				}
+
+			</div>
+			`;
+
+			console.log(item)
+
 			return `
                 <article class="project-card fade-in">
+										${sliderHtml}
+
                     <h3 class="project-title">${item.title}</h3>
                     <p class="project-desc">${item.desc}</p>
+
                     <div class="tags">${tagsHtml}</div>
+
                     ${linksHtml ? `<div class="project-links">${linksHtml}</div>` : ''}
                 </article>
             `;
@@ -298,6 +373,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		grid.querySelectorAll('.project-card').forEach(card => {
 			observer.observe(card);
+		});
+
+
+
+
+		grid.querySelectorAll('.project-card').forEach((card, index) => {
+
+			const project = projectsData[index];
+
+			if (!project.images || project.images.length <= 1)
+				return;
+
+			let current = 0;
+
+			const image = card.querySelector(".slider-image");
+			const thumbs = card.querySelectorAll(".slider-thumb");
+
+			function updateSlider(newIndex) {
+
+				image.classList.add("changing");
+
+				setTimeout(() => {
+
+					current = newIndex;
+
+					image.src = project.images[current];
+
+					thumbs.forEach((thumb, i) => {
+						thumb.classList.toggle(
+							"active",
+							i === current
+						);
+					});
+
+					image.classList.remove("changing");
+
+				}, 150);
+			}
+
+			card.querySelector(".next")
+				.addEventListener("click", () => {
+
+					let next = current + 1;
+
+					if (next >= project.images.length)
+						next = 0;
+
+					updateSlider(next);
+
+				});
+
+			card.querySelector(".prev")
+				.addEventListener("click", () => {
+
+					let prev = current - 1;
+
+					if (prev < 0)
+						prev = project.images.length - 1;
+
+					updateSlider(prev);
+
+				});
+
+			thumbs.forEach((thumb, i) => {
+
+				thumb.addEventListener("click", () => {
+
+					if (i !== current)
+						updateSlider(i);
+
+				});
+
+			});
+
 		});
 	}
 
@@ -350,3 +499,5 @@ document.addEventListener('DOMContentLoaded', () => {
 		observer.observe(el);
 	});
 });
+
+
