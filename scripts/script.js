@@ -6,6 +6,7 @@ const translations = {
       subtitle: "Tech Enthusiast & Full Stack Developer",
       bio: "A tech and computer networks enthusiast whose programming journey began in 2019. I am always keen to keep pace with rapid technological advancements and continuously develop my skills with the latest technologies, aiming to build and manage advanced infrastructures and systems.",
       cta: "View My Work",
+      cv: "CV",
       blog: "Blog",
     },
     projects: {
@@ -65,6 +66,7 @@ const translations = {
       subtitle: "شغوف بالتقنية ومطور شامل",
       bio: "مهتم وشغوف بالتقنية وشبكات الحاسب، بدأت رحلتي في عالم البرمجة عام 2019. أحرص دائماً على مواكبة التطور التقني السريع وتطوير مهاراتي باستمرار مع أحدث التقنيات، بهدف بناء وإدارة بنى تحتية وأنظمة متطورة.",
       cta: "شاهد أعمالي",
+      cv: "السيرة الذاتية",
       blog: "المدونة",
     },
     projects: {
