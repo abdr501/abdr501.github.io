@@ -7,6 +7,7 @@ const translations = {
       bio: "A tech and computer networks enthusiast whose programming journey began in 2019. I am always keen to keep pace with rapid technological advancements and continuously develop my skills with the latest technologies, aiming to build and manage advanced infrastructures and systems.",
       cta: "View My Work",
       cv: "CV",
+      cvLink: "pdf/Abdulrahman_Alenezi_EN-CV.pdf",
       blog: "Blog",
     },
     projects: {
@@ -67,6 +68,7 @@ const translations = {
       bio: "مهتم وشغوف بالتقنية وشبكات الحاسب، بدأت رحلتي في عالم البرمجة عام 2019. أحرص دائماً على مواكبة التطور التقني السريع وتطوير مهاراتي باستمرار مع أحدث التقنيات، بهدف بناء وإدارة بنى تحتية وأنظمة متطورة.",
       cta: "شاهد أعمالي",
       cv: "السيرة الذاتية",
+      cvLink: "pdf/Abdulrahman_Alenezi_AR-CV.pdf",
       blog: "المدونة",
     },
     projects: {
@@ -307,6 +309,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     });
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      const keys = key.split(".");
+      let value = translations[lang];
+
+      keys.forEach((k) => {
+        if (value) value = value[k];
+      });
+
+      if (value) {
+        if (el.innerHTML.includes("<") || value.includes("<")) {
+          el.innerHTML = value;
+        } else {
+          el.textContent = value;
+        }
+      }
+    });
+
+    const cvBtn = document.getElementById("cv-btn");
+    if (cvBtn) {
+      cvBtn.href = translations[lang].hero.cvLink;
+    }
   }
 
   function renderProjects(lang) {
