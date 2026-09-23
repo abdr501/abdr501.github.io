@@ -242,7 +242,7 @@ nav {
 .hero-image {
     width: 250px;
     height: 250px;
-    border-radius: 30px;
+    border-radius: 10px;
     /* Reduced radius */
     overflow: hidden;
     /* border removed */
