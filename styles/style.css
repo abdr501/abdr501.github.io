@@ -713,3 +713,30 @@ footer {
     transform:scale(1.08);
     border-color:var(--accent-primary);
 }
+
+/* Projects page */
+.projects-page { padding-top: 9rem; min-height: calc(100vh - 100px); }
+.projects-page-heading { margin-bottom: 3rem; }
+.projects-page-heading h1 { margin-bottom: .75rem; }
+.projects-page-heading p { color: var(--text-secondary); font-size: 1.05rem; }
+.projects-view-all { display:flex; justify-content:center; margin-top:3rem; }
+.slider-image { cursor: zoom-in; }
+body.image-viewer-open { overflow:hidden; }
+.image-viewer { position:fixed; inset:0; z-index:3000; display:flex; align-items:center; justify-content:center; padding:5vh 5vw; background:rgba(0,0,0,.82); opacity:0; visibility:hidden; transition:opacity .2s ease,visibility .2s ease; }
+.image-viewer.active { opacity:1; visibility:visible; }
+.image-viewer-stage { width:80vw; height:80vh; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:10px; }
+.image-viewer-stage img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; transform-origin:center center; user-select:none; touch-action:none; cursor:default; transition:transform .15s ease; will-change:transform; }
+.image-viewer-stage img.is-zoomed { cursor:grab; }
+.image-viewer-stage img.dragging { cursor:grabbing; transition:none; }
+.image-viewer-toolbar { position:absolute; top:1.25rem; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:.5rem; padding:.45rem; border:1px solid rgba(255,255,255,.15); border-radius:10px; background:rgba(20,20,20,.8); backdrop-filter:blur(12px); color:white; z-index:2; }
+.image-viewer-btn { width:38px; height:38px; display:grid; place-items:center; border:0; border-radius:7px; background:transparent; color:white; font-size:1.35rem; line-height:1; cursor:pointer; }
+.image-viewer-btn:hover { background:rgba(255,255,255,.14); }
+#image-zoom-level { min-width:52px; text-align:center; font-family:var(--font-mono); font-size:.85rem; }
+.image-viewer-close { margin-left:.35rem; font-size:1.6rem; }
+@media (max-width:768px) {
+    .projects-page { padding-top:7rem; }
+    .projects-page-heading { text-align:center; }
+    .image-viewer { padding:4rem 1rem 1rem; }
+    .image-viewer-stage { width:92vw; height:82vh; }
+    .image-viewer-toolbar { top:.75rem; }
+}
