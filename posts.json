@@ -1,0 +1,157 @@
+[
+  {
+    "slug": "ccna-vlan-lab",
+    "date": "2026-09-24",
+    "tags": [
+      "ccna",
+      "networking",
+      "cisco"
+    ],
+    "en": {
+      "path": "posts/ccna-vlan-lab/post-en.md",
+      "title": "Understanding VLANs with a Small Cisco Lab",
+      "description": "A practical Markdown example covering VLANs, access ports, trunks, and 802.1Q.",
+      "date": "2026-09-24",
+      "tags": [
+        "ccna",
+        "networking",
+        "cisco"
+      ]
+    },
+    "ar": {
+      "path": "posts/ccna-vlan-lab/post-ar.md",
+      "title": "فهم شبكات VLAN باستخدام مختبر Cisco صغير",
+      "description": "مثال عملي باستخدام Markdown يشرح شبكات VLAN ومنافذ Access وTrunk و802.1Q.",
+      "date": "2026-09-24",
+      "tags": [
+        "ccna",
+        "networking",
+        "cisco"
+      ]
+    }
+  },
+  {
+    "slug": "fedora-terminal-notes",
+    "date": "2026-09-22",
+    "tags": [
+      "linux",
+      "fedora",
+      "terminal"
+    ],
+    "en": {
+      "path": "posts/fedora-terminal-notes/post-en.md",
+      "title": "My Fedora Terminal Setup",
+      "description": "A sample post showing terminal commands, ordered lists, inline code, and a local image.",
+      "date": "2026-09-22",
+      "tags": [
+        "linux",
+        "fedora",
+        "terminal"
+      ]
+    },
+    "ar": {
+      "path": "posts/fedora-terminal-notes/post-ar.md",
+      "title": "إعداد الطرفية الخاصة بي على Fedora",
+      "description": "مثال يوضح أوامر الطرفية والقوائم المرتبة والأكواد المضمنة وصورة محلية.",
+      "date": "2026-09-22",
+      "tags": [
+        "linux",
+        "fedora",
+        "terminal"
+      ]
+    }
+  },
+  {
+    "slug": "osi-model-cheatsheet",
+    "date": "2026-09-20",
+    "tags": [
+      "networking",
+      "osi",
+      "study-notes"
+    ],
+    "en": {
+      "path": "posts/osi-model-cheatsheet/post-en.md",
+      "title": "OSI Model Quick Reference",
+      "description": "A compact networking reference demonstrating headings, nested lists, and a comparison table.",
+      "date": "2026-09-20",
+      "tags": [
+        "networking",
+        "osi",
+        "study-notes"
+      ]
+    },
+    "ar": {
+      "path": "posts/osi-model-cheatsheet/post-ar.md",
+      "title": "مرجع سريع لنموذج OSI",
+      "description": "مرجع مختصر في الشبكات يوضح العناوين والقوائم المتداخلة وجدول المقارنة.",
+      "date": "2026-09-20",
+      "tags": [
+        "networking",
+        "osi",
+        "study-notes"
+      ]
+    }
+  },
+  {
+    "slug": "python-networking-tools",
+    "date": "2026-09-18",
+    "tags": [
+      "python",
+      "networking",
+      "automation"
+    ],
+    "en": {
+      "path": "posts/python-networking-tools/post-en.md",
+      "title": "Small Python Networking Utilities",
+      "description": "A Markdown rendering example with Python code, links, and a checklist.",
+      "date": "2026-09-18",
+      "tags": [
+        "python",
+        "networking",
+        "automation"
+      ]
+    },
+    "ar": {
+      "path": "posts/python-networking-tools/post-ar.md",
+      "title": "أدوات شبكات صغيرة باستخدام Python",
+      "description": "مثال على تنسيق Markdown يوضح أكواد Python والروابط وقائمة المهام.",
+      "date": "2026-09-18",
+      "tags": [
+        "python",
+        "networking",
+        "automation"
+      ]
+    }
+  },
+  {
+    "slug": "firewall-placement-basics",
+    "date": "2026-09-16",
+    "tags": [
+      "firewall",
+      "security",
+      "networking"
+    ],
+    "en": {
+      "path": "posts/firewall-placement-basics/post-en.md",
+      "title": "Where Should a Firewall Sit?",
+      "description": "A simple network-design example showing diagrams, blockquotes, and configuration-style code.",
+      "date": "2026-09-16",
+      "tags": [
+        "firewall",
+        "security",
+        "networking"
+      ]
+    },
+    "ar": {
+      "path": "posts/firewall-placement-basics/post-ar.md",
+      "title": "أين يجب وضع جدار الحماية؟",
+      "description": "مثال بسيط على تصميم الشبكات يوضح مخططات الشبكة والاقتباسات البرمجية وأمثلة على الإعدادات.",
+      "date": "2026-09-16",
+      "tags": [
+        "firewall",
+        "security",
+        "networking"
+      ]
+    }
+  }
+]

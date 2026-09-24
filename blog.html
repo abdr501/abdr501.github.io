@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Abdulrahman's technical blog." />
+    <title>Blog — Abdulrahman Alenezi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/blog.css" />
+    <script defer src="scripts/blog.js"></script>
+</head>
+<body class="blog-body">
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="images/me.png" alt="Abdulrahman Alenezi Logo" />
+                    abdr501
+                </a>
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links">
+                    <a href="projects.html" data-i18n="nav.work">Work</a>
+                    <a href="blog.html" data-i18n="nav.blog" aria-current="page">Blog</a>
+                    <a href="index.html#about" data-i18n="nav.about">About</a>
+                    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+                    <button id="lang-toggle" class="btn btn-sm" style="margin-left: 1rem">
+                        العربية
+                    </button>
+                    <button id="theme-toggle" class="btn" style="padding: 0.5rem 0.75rem; font-size: 1.1rem; margin-left: 0.5rem; background: transparent; color: var(--text-primary); box-shadow: none">
+                        🌙
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container blog-container">
+        <section id="blog-list" class="blog-list-view">
+            <div class="blog-heading">
+                <p class="blog-eyebrow" data-i18n="blog.eyebrow">BLOG</p>
+                <h1 data-i18n="blog.title">Notes, projects &amp; things I learn.</h1>
+                <p data-i18n="blog.description">Technical notes and write-ups written in Markdown.</p>
+            </div>
+            <div id="posts-grid" class="posts-grid" aria-live="polite"></div>
+        </section>
+
+        <article id="post-view" class="post-view" hidden>
+            <a class="back-to-blog" href="blog.html" data-i18n="blog.back">← Back to Blog</a>
+            <div class="post-layout">
+                <aside class="post-sidebar" aria-label="Table of contents">
+                    <div class="post-sidebar-inner">
+                        <p class="toc-label" data-i18n="blog.onThisPage">ON THIS PAGE</p>
+                        <nav id="post-toc" class="post-toc"></nav>
+                    </div>
+                </aside>
+
+                <div class="post-main">
+                    <header id="post-header" class="post-header"></header>
+                    <div id="post-content" class="markdown-body"></div>
+                    <section id="recommended-posts" class="recommended-posts" aria-labelledby="recommended-posts-title" hidden>
+                        <div class="recommended-heading">
+                            <p class="blog-eyebrow" data-i18n="blog.recommendedEyebrow">RECOMMENDED</p>
+                            <h2 id="recommended-posts-title" data-i18n="blog.recommendedTitle">Recommended Posts</h2>
+                        </div>
+                        <div id="recommended-posts-grid" class="posts-grid"></div>
+                    </section>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p data-i18n="footer.copyright">
+                © 2026 abdr501. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
