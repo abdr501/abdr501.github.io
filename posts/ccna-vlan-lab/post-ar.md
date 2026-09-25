@@ -9,7 +9,7 @@ tags: [ccna, networking, cisco]
 
 تسمح لنا شبكات VLAN بتقسيم الشبكة المحولة إلى نطاقات بث منطقية، دون الحاجة إلى استخدام سويتش فعلي منفصل لكل شبكة.
 
-![طوبولوجيا VLAN بسيطة](images/topology.svg)
+![طوبولوجيا VLAN بسيطة](images/topology.png)
 
 ## ما هي VLAN؟
 

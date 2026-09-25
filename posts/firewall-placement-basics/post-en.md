@@ -9,7 +9,7 @@ tags: [firewall, security, networking]
 
 A firewall is commonly placed at a security boundary where traffic between different trust zones can be inspected and controlled.
 
-![Firewall placement](images/firewall.svg)
+![Firewall placement](images/firewall.png)
 
 ## A simple design
 

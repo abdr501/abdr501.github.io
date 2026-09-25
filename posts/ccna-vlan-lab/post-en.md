@@ -9,7 +9,7 @@ tags: [ccna, networking, cisco]
 
 VLANs let us separate a switched network into logical broadcast domains without requiring a separate physical switch for every network.
 
-![Simple VLAN topology](images/topology.svg)
+![Simple VLAN topology](images/topology.png)
 
 ## What is a VLAN?
 

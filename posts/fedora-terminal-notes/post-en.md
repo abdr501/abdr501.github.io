@@ -9,7 +9,7 @@ tags: [linux, fedora, terminal]
 
 I use the terminal heavily for networking labs, programming, and system administration.
 
-![Terminal workflow](images/terminal.svg)
+![Terminal workflow](images/terminal.png)
 
 ## The basic workflow
 

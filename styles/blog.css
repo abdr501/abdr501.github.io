@@ -208,7 +208,7 @@
 .markdown-body ul, .markdown-body ol { padding-inline-start: 1.5rem; }
 .markdown-body li + li { margin-top: .35rem; }
 .markdown-body hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--blog-line); }
-.markdown-body img { display: block; max-width: 100%; height: auto; margin: 2rem auto; border: 1px solid var(--blog-line); border-radius: 6px; box-shadow: none; }
+.markdown-body img { display: block; max-width: 100%; height: auto; margin: 2rem auto; border: 1px solid var(--blog-line); border-radius: 6px; box-shadow: none; background: var(--bg-color); }
 .markdown-body a { color: var(--accent-primary); text-decoration: underline; text-underline-offset: 3px; }
 .markdown-body blockquote { margin-inline: 0; padding: .9rem 1.1rem; border-inline-start: 3px solid var(--accent-primary); background: var(--blog-panel); color: var(--text-secondary); border-radius: 0 5px 5px 0; }
 .markdown-body code { padding: .14rem .35rem; border: 1px solid var(--blog-line); border-radius: 4px; background: var(--blog-panel); font-family: var(--font-mono); font-size: .88em; }
