@@ -13,7 +13,7 @@ A firewall is commonly placed at a security boundary where traffic between diffe
 
 ## A simple design
 
-```text
+```text {center}
 Internet
    |
 [ ISP ]

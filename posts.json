@@ -20,8 +20,8 @@
     },
     "ar": {
       "path": "posts/ccna-vlan-lab/post-ar.md",
-      "title": "فهم شبكات VLAN باستخدام مختبر Cisco صغير",
-      "description": "مثال عملي باستخدام Markdown يشرح شبكات VLAN ومنافذ Access وTrunk و802.1Q.",
+      "title": "فهم شبكات VLAN من خلال مختبر Cisco صغير",
+      "description": "مثال عملي يشرح شبكات VLAN ومنافذ Access ومنافذ Trunk ووسم 802.1Q.",
       "date": "2026-09-24",
       "tags": [
         "ccna",
@@ -51,8 +51,8 @@
     },
     "ar": {
       "path": "posts/fedora-terminal-notes/post-ar.md",
-      "title": "إعداد الطرفية الخاصة بي على Fedora",
-      "description": "مثال يوضح أوامر الطرفية والقوائم المرتبة والأكواد المضمنة وصورة محلية.",
+      "title": "إعداد الطرفية الخاص بي على Fedora",
+      "description": "مثال على مقال Markdown يعرض أوامر الطرفية والقوائم المرتبة والتعليمات البرمجية والصورة المحلية.",
       "date": "2026-09-22",
       "tags": [
         "linux",
@@ -83,7 +83,7 @@
     "ar": {
       "path": "posts/osi-model-cheatsheet/post-ar.md",
       "title": "مرجع سريع لنموذج OSI",
-      "description": "مرجع مختصر في الشبكات يوضح العناوين والقوائم المتداخلة وجدول المقارنة.",
+      "description": "مرجع مختصر للشبكات يوضح العناوين والقوائم المتداخلة وجدول المقارنة.",
       "date": "2026-09-20",
       "tags": [
         "networking",
@@ -114,7 +114,7 @@
     "ar": {
       "path": "posts/python-networking-tools/post-ar.md",
       "title": "أدوات شبكات صغيرة باستخدام Python",
-      "description": "مثال على تنسيق Markdown يوضح أكواد Python والروابط وقائمة المهام.",
+      "description": "مثال على Markdown يعرض كود Python والروابط وقائمة التحقق.",
       "date": "2026-09-18",
       "tags": [
         "python",
@@ -144,8 +144,8 @@
     },
     "ar": {
       "path": "posts/firewall-placement-basics/post-ar.md",
-      "title": "أين يجب وضع جدار الحماية؟",
-      "description": "مثال بسيط على تصميم الشبكات يوضح مخططات الشبكة والاقتباسات البرمجية وأمثلة على الإعدادات.",
+      "title": "أين يجب وضع الجدار الناري؟",
+      "description": "مثال بسيط على تصميم الشبكات يوضح المخططات والاقتباسات وأوامر الإعداد.",
       "date": "2026-09-16",
       "tags": [
         "firewall",

@@ -55,11 +55,11 @@
     min-height: 290px;
     padding: 1.75rem;
     overflow: hidden;
-    border: 1px solid var(--glass-border);
+    border: 0;
     border-radius: 14px;
     background: var(--blog-card);
-    box-shadow: var(--shadow-sm);
-    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    box-shadow: none;
+    transition: transform .22s ease, background .22s ease;
 }
 
 .post-card::before {
@@ -79,8 +79,7 @@
 
 .post-card:hover {
     transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--accent-primary) 55%, var(--glass-border));
-    box-shadow: var(--shadow-md);
+    border-color: transparent;
 }
 
 .post-card:hover::before {
@@ -184,7 +183,7 @@
 .toc-label { margin: 0 0 .85rem; color: var(--text-secondary); font-size: .68rem; font-weight: 800; letter-spacing: .15em; }
 .post-toc { display: flex; flex-direction: column; border-inline-start: 1px solid var(--blog-line); }
 .toc-link { position: relative; padding: .35rem .9rem; color: var(--text-secondary); font-size: .78rem; line-height: 1.45; text-decoration: none; transition: color .2s ease, border-color .2s ease; }
-.toc-link:hover, .toc-link.active { color: var(--text-primary); }
+.toc-link:hover { color: var(--text-primary); }
 .toc-link.active::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: -1px; width: 2px; background: var(--accent-primary); }
 .toc-h3 { padding-inline-start: 1.5rem; font-size: .74rem; }
 .post-sidebar-inner.is-empty { display: none; }
@@ -277,7 +276,7 @@
         linear-gradient(145deg,
             color-mix(in srgb, var(--blog-card) 96%, var(--accent-primary) 4%),
             var(--blog-card));
-    box-shadow: 0 10px 30px color-mix(in srgb, var(--text-primary) 7%, transparent);
+    box-shadow: none;
 }
 
 .post-card::after {
@@ -341,7 +340,7 @@
         linear-gradient(145deg,
             color-mix(in srgb, var(--bg-color) 97%, var(--text-primary)),
             var(--bg-color));
-    box-shadow: 0 8px 28px color-mix(in srgb, var(--text-primary) 6%, transparent);
+    box-shadow: none;
 }
 
 .post-card::after {
@@ -421,7 +420,7 @@
 }
 
 .toc-link.active {
-    color: var(--accent-primary);
+    color: var(--accent-primary) !important;
     font-weight: 700;
 }
 
@@ -433,10 +432,17 @@
 /* Syntax highlighting */
 .markdown-body pre code.hljs,
 .markdown-body pre code {
-    direction: ltr;
     display: block;
     color: var(--text-primary);
     background: transparent;
+}
+
+/* Fenced Markdown code blocks are always LTR, including Arabic posts. */
+.markdown-body pre,
+.markdown-body pre code {
+    direction: ltr;
+    text-align: left;
+    unicode-bidi: isolate;
 }
 
 .markdown-body pre {
@@ -574,4 +580,19 @@
         margin-top: 3.5rem;
         padding-top: 2.25rem;
     }
+}
+
+/* Fenced Markdown code blocks marked with {center} keep LTR direction and center their contents. */
+.markdown-body pre.code-center,
+.markdown-body pre.code-center code {
+    direction: ltr;
+    text-align: center;
+}
+
+/* Post TOC alignment */
+.post-toc {
+    display: flex;
+    flex-direction: column;
+    border-inline-start: 1px solid var(--blog-line);
+    align-items: start;
 }

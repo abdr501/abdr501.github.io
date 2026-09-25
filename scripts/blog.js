@@ -180,6 +180,18 @@ async function loadHighlightJs() {
     return window.hljs;
 }
 
+function applyCodeBlockAlignment() {
+    postContent.querySelectorAll("pre code").forEach((block) => {
+        const centerClass = Array.from(block.classList).find((name) => name.startsWith("language-center"));
+        if (!centerClass) return;
+
+        const language = centerClass.replace(/^language-center-?/, "");
+        block.classList.remove(centerClass);
+        if (language) block.classList.add(`language-${language}`);
+        block.closest("pre")?.classList.add("code-center");
+    });
+}
+
 function highlightCodeBlocks(hljs) {
     if (!hljs || typeof hljs.highlightElement !== "function") {
         return;
@@ -267,16 +279,21 @@ function buildPostToc() {
 }
 
 function setupTocObserver() {
-    if (!postToc) return;
+    if (!postToc || !postContent) return;
 
     const headings = [...postContent.querySelectorAll("h2, h3")];
-    if (!headings.length) return;
+    const links = [...postToc.querySelectorAll(".toc-link")];
+    if (!headings.length || !links.length) return;
 
-    const links = [...postToc.querySelectorAll("a")];
-    let ticking = false;
+    // Remove the previous observer when switching posts/languages.
+    window.__tocObserver?.disconnect();
+    if (window.__tocScrollHandler) {
+        window.removeEventListener("scroll", window.__tocScrollHandler);
+        window.removeEventListener("resize", window.__tocScrollHandler);
+    }
 
     const setActiveHeading = () => {
-        const activationLine = window.innerHeight * 0.22;
+        const activationLine = Math.min(180, window.innerHeight * 0.22);
         let activeHeading = headings[0];
 
         for (const heading of headings) {
@@ -288,27 +305,30 @@ function setupTocObserver() {
         }
 
         links.forEach((link) => {
-            link.classList.toggle(
-                "active",
-                link.getAttribute("href") === `#${activeHeading.id}`,
-            );
+            link.classList.toggle("active", link.dataset.target === activeHeading.id);
         });
-
-        ticking = false;
     };
 
-    const onScroll = () => {
-        if (!ticking) {
-            window.requestAnimationFrame(setActiveHeading);
-            ticking = true;
-        }
-    };
+    // Store the target ID directly so URL encoding can never prevent matching.
+    links.forEach((link) => {
+        const href = link.getAttribute("href") || "";
+        link.dataset.target = decodeURIComponent(href.startsWith("#") ? href.slice(1) : href);
+    });
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    setActiveHeading();
+    const observer = new IntersectionObserver(
+        () => setActiveHeading(),
+        { root: null, rootMargin: "-18% 0px -70% 0px", threshold: [0, 1] },
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+    window.__tocObserver = observer;
+    window.__tocScrollHandler = setActiveHeading;
+    window.addEventListener("scroll", setActiveHeading, { passive: true });
+    window.addEventListener("resize", setActiveHeading, { passive: true });
+
+    // The post is visible now, so calculate the first active item using real positions.
+    requestAnimationFrame(setActiveHeading);
 }
-
 async function openPost(post) {
     try {
         const localizedPost = getLocalizedPost(post);
@@ -327,7 +347,18 @@ async function openPost(post) {
 
         const marked = await loadMarked();
         const hljs = await loadHighlightJs().catch(() => null);
-        const markdown = resolveRelativeAssets(content, localizedPost.path);
+        let markdown = resolveRelativeAssets(content, localizedPost.path);
+
+        // Custom Markdown convention: ```javascript {center}
+        // The {center} marker is converted to a special language class so the
+        // rendered code stays LTR while its contents are centered.
+        markdown = markdown.replace(/(^|\n)(\s*)```([\w+-]*)\s*\{center\}\s*(?=\n|$)/g,
+            (_, lineStart, indent, language) => `${lineStart}${indent}CODECENTER${language ? `-${language}` : ""}\n`
+        ).replace(/(^|\n)(\s*)\u001bCODECENTER(-[\w+-]+)?/g,
+            (_, lineStart, indent, language) => `${lineStart}${indent}CODECENTER${language || ""}`
+        );
+
+        markdown = markdown.replace(/\u001bCODECENTER(-[\w+-]+)?/g, (_, language) => `\`\`\`center${language || ""}`);
 
         postHeader.innerHTML = `
             <h1>${escapeHtml(title)}</h1>
@@ -340,6 +371,7 @@ async function openPost(post) {
         `;
 
         postContent.innerHTML = marked.parse(markdown);
+        applyCodeBlockAlignment();
         highlightCodeBlocks(hljs);
         renderRecommendedPosts(window.__blogPosts || [], post);
         buildPostToc();
@@ -363,6 +395,8 @@ function getRequestedSlug() {
 const blogTranslations = {
     en: {
         nav: { home: "Home", work: "Work", blog: "Blog", about: "About", contact: "Contact" },
+        footer: { home: "Home", work: "Work", blog: "Blog", about: "About", contact: "Contact", copyright: "© 2026 abdr501. All rights reserved." },
+        contact: { title: "Let's Connect", subtitle: "Interested in working together? Drop me a line.", cta: "Say Hello" },
         blog: {
             eyebrow: "BLOG",
             title: "Notes, projects & things I learn.",
@@ -379,6 +413,8 @@ const blogTranslations = {
     },
     ar: {
         nav: { home: "الرئيسية", work: "أعمالي", blog: "المدونة", about: "عني", contact: "تواصل معي" },
+        footer: { home: "الرئيسية", work: "أعمالي", blog: "المدونة", about: "عني", contact: "تواصل معي", copyright: "© 2026 abdr501. جميع الحقوق محفوظة." },
+        contact: { title: "تواصل معي", subtitle: "هل ترغب في العمل معي؟ أرسل لي رسالة.", cta: "أرسل رسالة" },
         blog: {
             eyebrow: "المدونة",
             title: "ملاحظاتي ومشاريعي وما أتعلمه.",
@@ -442,6 +478,11 @@ function renderPostsLanguage() {
     });
 }
 
+function setupContact() {
+    const button = document.getElementById("contact-email-btn");
+    if (button) button.href = "mailto:abdulrahman.alenezi.0x@gmail.com";
+}
+
 function setupControls() {
     const menuToggle = document.getElementById("menu-toggle");
     const navLinks = document.querySelector(".nav-links");
@@ -490,6 +531,7 @@ function setTheme(theme) {
 }
 
 async function initBlog() {
+    setupContact();
     setupControls();
 
     try {

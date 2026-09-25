@@ -2,7 +2,7 @@ const translations = {
 	en: {
 		nav: { home: "Home", work: "Work", blog: "Blog", about: "About", contact: "Contact" },
 		hero: {
-			title: "Abdulrahman </br> Alenezi",
+			title: "Abdulrahman<br>Alenezi",
 			subtitle: "Tech Enthusiast & Full Stack Developer",
 			bio: "A tech and computer networks enthusiast whose programming journey began in 2019. I am always keen to keep pace with rapid technological advancements and continuously develop my skills with the latest technologies, aiming to build and manage advanced infrastructures and systems.",
 			cta: "View My Work",
@@ -60,13 +60,18 @@ const translations = {
 			cta: "Say Hello",
 		},
 		footer: {
+			home: "Home",
+			work: "Work",
+			blog: "Blog",
+			about: "About",
+			contact: "Contact",
 			copyright: "© 2026 abdr501. All rights reserved.",
 		},
 	},
 	ar: {
 		nav: { home: "الرئيسية", work: "أعمالي", blog: "المدونة", about: "حول", contact: "تواصل معي" },
 		hero: {
-			title: "عبدالرحمن</br>  العنزي",
+			title: "عبدالرحمن<br>العنزي",
 			subtitle: "شغوف بالتقنية ومطور شامل",
 			bio: "مهتم وشغوف بالتقنية وشبكات الحاسب، بدأت رحلتي في عالم البرمجة عام 2019. أحرص دائماً على مواكبة التطور التقني السريع وتطوير مهاراتي باستمرار مع أحدث التقنيات، بهدف بناء وإدارة بنى تحتية وأنظمة متطورة.",
 			cta: "شاهد أعمالي",
@@ -124,6 +129,11 @@ const translations = {
 			cta: "قل مرحباً",
 		},
 		footer: {
+			home: "الرئيسية",
+			work: "أعمالي",
+			blog: "المدونة",
+			about: "عني",
+			contact: "تواصل معي",
 			copyright: "© 2026 abdr501. جميع الحقوق محفوظة.",
 		},
 	},
@@ -483,30 +493,30 @@ document.addEventListener("DOMContentLoaded", () => {
 		viewer.addEventListener("wheel", (e) => {
 			e.preventDefault();
 			setLightboxZoom(lightboxScale + (e.deltaY < 0 ? .15 : -.15));
-		}, { passive: false });
+		}, {passive:false});
 
 		image.addEventListener("pointerdown", (e) => {
 			if (lightboxScale <= 1) return;
 			dragging = true;
 			image.setPointerCapture(e.pointerId);
-			dragStartX = e.clientX;
-			dragStartY = e.clientY;
-			dragOriginX = lightboxX;
-			dragOriginY = lightboxY;
+			dragStartX=e.clientX;
+			dragStartY=e.clientY;
+			dragOriginX=lightboxX;
+			dragOriginY=lightboxY;
 			image.classList.add("dragging");
 		});
 		image.addEventListener("pointermove", (e) => {
 			if (!dragging) return;
-			lightboxX = dragOriginX + e.clientX - dragStartX;
-			lightboxY = dragOriginY + e.clientY - dragStartY;
+			lightboxX=dragOriginX+e.clientX-dragStartX;
+			lightboxY=dragOriginY+e.clientY-dragStartY;
 			updateLightboxTransform();
 		});
 		image.addEventListener("pointerup", () => {
-			dragging = false;
+			dragging=false;
 			image.classList.remove("dragging");
 		});
 		image.addEventListener("pointercancel", () => {
-			dragging = false;
+			dragging=false;
 			image.classList.remove("dragging");
 		});
 	}
@@ -517,9 +527,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		viewerIndex = Math.max(0, Math.min(index, viewerImages.length - 1));
 		viewerAlt = alt || "";
 
-		const viewer = document.getElementById("image-viewer");
+		const viewer=document.getElementById("image-viewer");
 		viewer.classList.add("active");
-		viewer.setAttribute("aria-hidden", "false");
+		viewer.setAttribute("aria-hidden","false");
 		document.body.classList.add("image-viewer-open");
 
 		renderViewerThumbnails();
@@ -567,33 +577,33 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function closeImageViewer() {
-		const viewer = document.getElementById("image-viewer");
+		const viewer=document.getElementById("image-viewer");
 		if (!viewer) return;
 		viewer.classList.remove("active");
-		viewer.setAttribute("aria-hidden", "true");
+		viewer.setAttribute("aria-hidden","true");
 		document.body.classList.remove("image-viewer-open");
 	}
 
 	function setLightboxZoom(value) {
-		lightboxScale = Math.min(5, Math.max(1, value));
-		if (lightboxScale === 1) { lightboxX = 0; lightboxY = 0; }
+		lightboxScale=Math.min(5,Math.max(1,value));
+		if(lightboxScale===1){lightboxX=0;lightboxY=0;}
 		updateLightboxTransform();
 	}
 
 	function resetLightboxZoom() {
-		lightboxScale = 1;
-		lightboxX = 0;
-		lightboxY = 0;
+		lightboxScale=1;
+		lightboxX=0;
+		lightboxY=0;
 		updateLightboxTransform();
 	}
 
 	function updateLightboxTransform() {
-		const image = document.getElementById("image-viewer-image");
-		const level = document.getElementById("image-zoom-level");
-		if (!image) return;
-		image.style.transform = `translate(${lightboxX}px, ${lightboxY}px) scale(${lightboxScale})`;
-		if (level) level.textContent = `${Math.round(lightboxScale * 100)}%`;
-		image.classList.toggle("is-zoomed", lightboxScale > 1);
+		const image=document.getElementById("image-viewer-image");
+		const level=document.getElementById("image-zoom-level");
+		if(!image)return;
+		image.style.transform=`translate(${lightboxX}px, ${lightboxY}px) scale(${lightboxScale})`;
+		if(level)level.textContent=`${Math.round(lightboxScale*100)}%`;
+		image.classList.toggle("is-zoomed",lightboxScale>1);
 	}
 
 	function renderSocialLinks() {

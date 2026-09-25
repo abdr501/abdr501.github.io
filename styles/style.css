@@ -262,7 +262,6 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
 }
 
 
@@ -336,8 +335,8 @@ nav {
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--card-radius);
     padding: 2.5rem;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    transition: border-color 0.3s ease, background 0.3s ease;
+    box-shadow: none;
     position: relative;
     overflow: hidden;
 }
@@ -361,8 +360,6 @@ nav {
 }
 
 .project-card:hover {
-    transform: translateY(-12px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
     border-color: var(--accent-primary);
     background: rgba(255, 255, 255, 0.6);
 }
@@ -370,7 +367,7 @@ nav {
 [data-theme="dark"] .project-card {
     background: rgba(30, 30, 30, 0.3);
     border-color: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: none;
 }
 
 [data-theme="dark"] .project-card::before {
@@ -383,7 +380,6 @@ nav {
 [data-theme="dark"] .project-card:hover {
     border-color: var(--accent-primary);
     background: rgba(40, 40, 40, 0.5);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .project-title {
@@ -462,17 +458,59 @@ nav {
     color: var(--accent-primary);
 }
 
-/* Footer */
+/* Footer contact — visually identical to the home-page contact section */
 footer {
     text-align: center;
-    padding: 2rem 0;
+    padding: 0;
     color: var(--text-secondary);
     font-size: 0.875rem;
     background: #ffffff;
 }
 
+footer .footer-contact {
+    width: 100%;
+    margin: 0;
+    padding: 6rem 0;
+    text-align: initial;
+}
+
+footer .footer-contact .container {
+    width: 100%;
+}
+
+.footer-bottom {
+    padding: 2rem 0;
+    border-top: 1px solid var(--glass-border);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-primary);
+}
+
 [data-theme="dark"] footer {
     background: #0a0a0a;
+}
+
+/* Home page footer keeps the original standalone copyright layout. */
+.home-page footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--glass-border);
 }
 
 /* Animations */
