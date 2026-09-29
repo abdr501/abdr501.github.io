@@ -380,6 +380,7 @@ async function openPost(post) {
         postView.hidden = false;
         document.title = `${title} — Abdulrahman Alenezi`;
         window.scrollTo({ top: 0, behavior: "instant" });
+        setupPostImageViewer();
     } catch (error) {
         postHeader.innerHTML = "<h1>Unable to open post</h1>";
         postContent.innerHTML = `<div class="post-error">${escapeHtml(error.message)}</div>`;
@@ -554,5 +555,188 @@ async function initBlog() {
         postsGrid.innerHTML = `<div class="post-error">${escapeHtml(error.message)}</div>`;
     }
 }
+
+// ─── Image Viewer ────────────────────────────────────────────────────────────
+
+let lightboxScale = 1, lightboxX = 0, lightboxY = 0;
+let dragging = false, dragStartX = 0, dragStartY = 0, dragOriginX = 0, dragOriginY = 0;
+let viewerImages = [], viewerIndex = 0, viewerAlt = "";
+
+function ensureImageViewer() {
+    if (document.getElementById("image-viewer")) return;
+
+    document.body.insertAdjacentHTML("beforeend", `
+        <div id="image-viewer" class="image-viewer" aria-hidden="true">
+            <div class="image-viewer-toolbar">
+                <button type="button" class="image-viewer-btn" data-viewer-action="previous" aria-label="Previous image">❮</button>
+                <button type="button" class="image-viewer-btn" data-viewer-action="zoom-out" aria-label="Zoom out">−</button>
+                <span id="image-zoom-level">100%</span>
+                <button type="button" class="image-viewer-btn" data-viewer-action="zoom-in" aria-label="Zoom in">+</button>
+                <button type="button" class="image-viewer-btn" data-viewer-action="reset" aria-label="Reset zoom">↺</button>
+                <button type="button" class="image-viewer-btn" data-viewer-action="next" aria-label="Next image">❯</button>
+                <button type="button" class="image-viewer-btn image-viewer-close" data-viewer-action="close" aria-label="Close">×</button>
+            </div>
+            <div class="image-viewer-stage">
+                <img id="image-viewer-image" src="" alt="" draggable="false">
+            </div>
+            <div class="image-viewer-thumbnails" id="image-viewer-thumbnails"></div>
+        </div>`);
+
+    const viewer = document.getElementById("image-viewer");
+    const stage = viewer.querySelector(".image-viewer-stage");
+    const image = document.getElementById("image-viewer-image");
+
+    viewer.addEventListener("click", (e) => {
+        if (e.target === viewer || e.target === stage) {
+            closeImageViewer();
+            return;
+        }
+
+        const thumb = e.target.closest("[data-viewer-index]");
+        if (thumb) {
+            showViewerImage(Number(thumb.dataset.viewerIndex));
+            return;
+        }
+
+        const action = e.target.closest("[data-viewer-action]")?.dataset.viewerAction;
+        if (action === "next") showNextViewerImage();
+        if (action === "previous") showPreviousViewerImage();
+        if (action === "zoom-in") setLightboxZoom(lightboxScale + .25);
+        if (action === "zoom-out") setLightboxZoom(lightboxScale - .25);
+        if (action === "reset") resetLightboxZoom();
+        if (action === "close") closeImageViewer();
+    });
+
+    viewer.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        setLightboxZoom(lightboxScale + (e.deltaY < 0 ? .15 : -.15));
+    }, { passive: false });
+
+    image.addEventListener("pointerdown", (e) => {
+        if (lightboxScale <= 1) return;
+        dragging = true;
+        image.setPointerCapture(e.pointerId);
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        dragOriginX = lightboxX;
+        dragOriginY = lightboxY;
+        image.classList.add("dragging");
+    });
+    image.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        lightboxX = dragOriginX + e.clientX - dragStartX;
+        lightboxY = dragOriginY + e.clientY - dragStartY;
+        updateLightboxTransform();
+    });
+    image.addEventListener("pointerup", () => {
+        dragging = false;
+        image.classList.remove("dragging");
+    });
+    image.addEventListener("pointercancel", () => {
+        dragging = false;
+        image.classList.remove("dragging");
+    });
+}
+
+function openImageViewer(images, index = 0, alt = "") {
+    ensureImageViewer();
+    viewerImages = Array.isArray(images) ? images : [images];
+    viewerIndex = Math.max(0, Math.min(index, viewerImages.length - 1));
+    viewerAlt = alt || "";
+
+    const viewer = document.getElementById("image-viewer");
+    viewer.classList.add("active");
+    viewer.setAttribute("aria-hidden", "false");
+    document.body.classList.add("image-viewer-open");
+
+    renderViewerThumbnails();
+    updateViewerImage();
+    resetLightboxZoom();
+}
+
+function renderViewerThumbnails() {
+    const container = document.getElementById("image-viewer-thumbnails");
+    if (!container) return;
+
+    container.innerHTML = viewerImages.map((src, index) => `
+        <button
+            type="button"
+            class="image-viewer-thumb${index === viewerIndex ? " active" : ""}"
+            data-viewer-index="${index}"
+            aria-label="View image ${index + 1}"
+        >
+            <img src="${src}" alt="">
+        </button>
+    `).join("");
+}
+
+function showViewerImage(index) {
+    if (!viewerImages.length) return;
+    viewerIndex = (index + viewerImages.length) % viewerImages.length;
+    updateViewerImage();
+    renderViewerThumbnails();
+    resetLightboxZoom();
+}
+
+function showNextViewerImage() {
+    showViewerImage(viewerIndex + 1);
+}
+
+function showPreviousViewerImage() {
+    showViewerImage(viewerIndex - 1);
+}
+
+function updateViewerImage() {
+    const image = document.getElementById("image-viewer-image");
+    if (!image || !viewerImages.length) return;
+    image.src = viewerImages[viewerIndex];
+    image.alt = viewerAlt || `Post image ${viewerIndex + 1}`;
+}
+
+function closeImageViewer() {
+    const viewer = document.getElementById("image-viewer");
+    if (!viewer) return;
+    viewer.classList.remove("active");
+    viewer.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("image-viewer-open");
+}
+
+function setLightboxZoom(value) {
+    lightboxScale = Math.min(5, Math.max(1, value));
+    if (lightboxScale === 1) { lightboxX = 0; lightboxY = 0; }
+    updateLightboxTransform();
+}
+
+function resetLightboxZoom() {
+    lightboxScale = 1;
+    lightboxX = 0;
+    lightboxY = 0;
+    updateLightboxTransform();
+}
+
+function updateLightboxTransform() {
+    const image = document.getElementById("image-viewer-image");
+    const level = document.getElementById("image-zoom-level");
+    if (!image) return;
+    image.style.transform = `translate(${lightboxX}px, ${lightboxY}px) scale(${lightboxScale})`;
+    if (level) level.textContent = `${Math.round(lightboxScale * 100)}%`;
+    image.classList.toggle("is-zoomed", lightboxScale > 1);
+}
+
+function setupPostImageViewer() {
+    if (!postContent) return;
+
+    const images = [...postContent.querySelectorAll("img")];
+    images.forEach((img, index) => {
+        img.style.cursor = "zoom-in";
+        img.addEventListener("click", () => {
+            openImageViewer(images.map((i) => i.src), index, img.alt);
+        });
+    });
+}
+
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageViewer(); });
+
+// ─── Init ───────────────────────────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", initBlog);
