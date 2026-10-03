@@ -1,5 +1,30 @@
 [
   {
+    "slug": "cisco-vlan-lab",
+    "date": "2026-10-03",
+    "tags": [
+      ""
+    ],
+    "en": {
+      "path": "posts/cisco-vlan-lab/post-en.md",
+      "title": "Understanding VLANs Through a Small Cisco Lab",
+      "description": "A practical explanation of VLANs, Access and Trunk ports, and how Cisco IOS handles VLAN configuration mode.",
+      "date": "2026-10-03",
+      "tags": [
+        ""
+      ]
+    },
+    "ar": {
+      "path": "posts/cisco-vlan-lab/post-ar.md",
+      "title": "فهم شبكات VLAN من خلال مختبر Cisco صغير",
+      "description": "شرح عملي لشبكات VLAN ومنافذ Access وTrunk وكيف يتعامل Cisco IOS مع وضع إعداد الـVLAN.",
+      "date": "2026-10-03",
+      "tags": [
+        ""
+      ]
+    }
+  },
+  {
     "slug": "ccna-vlan-lab",
     "date": "2026-09-24",
     "tags": [
