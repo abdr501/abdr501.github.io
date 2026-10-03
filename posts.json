@@ -3,7 +3,9 @@
     "slug": "cisco-vlan-lab",
     "date": "2026-10-03",
     "tags": [
-      ""
+      "ccna",
+      "networking",
+      "cisco"
     ],
     "en": {
       "path": "posts/cisco-vlan-lab/post-en.md",
@@ -11,7 +13,9 @@
       "description": "A practical explanation of VLANs, Access and Trunk ports, and how Cisco IOS handles VLAN configuration mode.",
       "date": "2026-10-03",
       "tags": [
-        ""
+        "ccna",
+        "networking",
+        "cisco"
       ]
     },
     "ar": {
@@ -20,7 +24,9 @@
       "description": "شرح عملي لشبكات VLAN ومنافذ Access وTrunk وكيف يتعامل Cisco IOS مع وضع إعداد الـVLAN.",
       "date": "2026-10-03",
       "tags": [
-        ""
+        "ccna",
+        "networking",
+        "cisco"
       ]
     }
   },

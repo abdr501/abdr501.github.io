@@ -21,16 +21,54 @@ def parse_front_matter(text):
     match = re.match(r"^---\s*\n(.*?)\n---\s*\n?", text, re.S)
     if not match:
         return {}, text
+
     meta = {}
-    for line in match.group(1).splitlines():
+    lines = match.group(1).splitlines()
+    index = 0
+
+    while index < len(lines):
+        line = lines[index]
         if ":" not in line:
+            index += 1
             continue
+
         key, value = line.split(":", 1)
         key = key.strip()
         value = value.strip().strip("'\"")
+
+        # Inline YAML list: tags: [linux, networking]
         if value.startswith("[") and value.endswith("]"):
             value = [item.strip().strip("'\"") for item in value[1:-1].split(",") if item.strip()]
+            meta[key] = value
+            index += 1
+            continue
+
+        # Block YAML list:
+        # tags:
+        #   - linux
+        #   - networking
+        if value == "":
+            items = []
+            next_index = index + 1
+
+            while next_index < len(lines):
+                item_match = re.match(r"^\s+-\s+(.*)$", lines[next_index])
+                if not item_match:
+                    break
+
+                item = item_match.group(1).strip().strip("'\"")
+                if item:
+                    items.append(item)
+                next_index += 1
+
+            if items:
+                meta[key] = items
+                index = next_index
+                continue
+
         meta[key] = value
+        index += 1
+
     return meta, text[match.end():]
 
 
@@ -46,6 +84,15 @@ def strip_markdown(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
+def normalize_tags(value):
+    if isinstance(value, list):
+        return [str(tag).strip() for tag in value if str(tag).strip()]
+    if value is None:
+        return []
+    value = str(value).strip()
+    return [value] if value else []
+
+
 def read_language(post_dir, lang):
     path = post_dir / f"post-{lang}.md"
     if not path.exists():
@@ -57,7 +104,7 @@ def read_language(post_dir, lang):
         "title": meta.get("title") or first_heading(content),
         "description": meta.get("description") or strip_markdown(content)[:180],
         "date": meta.get("date", ""),
-        "tags": meta.get("tags", []) if isinstance(meta.get("tags", []), list) else [meta.get("tags")],
+        "tags": normalize_tags(meta.get("tags", [])),
     }
 
 posts = []
