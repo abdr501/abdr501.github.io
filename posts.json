@@ -25,37 +25,6 @@
     }
   },
   {
-    "slug": "ccna-vlan-lab",
-    "date": "2026-09-24",
-    "tags": [
-      "ccna",
-      "networking",
-      "cisco"
-    ],
-    "en": {
-      "path": "posts/ccna-vlan-lab/post-en.md",
-      "title": "Understanding VLANs with a Small Cisco Lab",
-      "description": "A practical Markdown example covering VLANs, access ports, trunks, and 802.1Q.",
-      "date": "2026-09-24",
-      "tags": [
-        "ccna",
-        "networking",
-        "cisco"
-      ]
-    },
-    "ar": {
-      "path": "posts/ccna-vlan-lab/post-ar.md",
-      "title": "فهم شبكات VLAN من خلال مختبر Cisco صغير",
-      "description": "مثال عملي يشرح شبكات VLAN ومنافذ Access ومنافذ Trunk ووسم 802.1Q.",
-      "date": "2026-09-24",
-      "tags": [
-        "ccna",
-        "networking",
-        "cisco"
-      ]
-    }
-  },
-  {
     "slug": "fedora-terminal-notes",
     "date": "2026-09-22",
     "tags": [
