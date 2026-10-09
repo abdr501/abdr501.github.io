@@ -63,6 +63,34 @@
                 <h1 data-i18n="blog.title">Notes, projects &amp; things I learn.</h1>
                 <p data-i18n="blog.description">Technical notes and write-ups written in Markdown.</p>
             </div>
+
+            <div class="blog-search-bar">
+                <div class="blog-search-input-wrap">
+                    <input
+                        id="blog-search-input"
+                        type="search"
+                        placeholder="Search posts..."
+                        aria-label="Search posts"
+                        autocomplete="off"
+                    />
+                    <button id="blog-search-clear" class="blog-search-clear" type="button" aria-label="Clear search" hidden>
+                        ×
+                    </button>
+                </div>
+
+                <div class="blog-search-filters">
+                    <div id="blog-tag-filters" class="blog-tag-filters" aria-label="Filter by tag"></div>
+                    <select id="blog-sort" class="blog-sort" aria-label="Sort posts">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="title-asc">Title A–Z</option>
+                        <option value="title-desc">Title Z–A</option>
+                    </select>
+                </div>
+
+                <p id="blog-search-status" class="blog-search-status" aria-live="polite" hidden></p>
+            </div>
+
             <div id="posts-grid" class="posts-grid" aria-live="polite"></div>
         </section>
 

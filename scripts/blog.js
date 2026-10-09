@@ -9,6 +9,12 @@ const postToc = document.getElementById("post-toc");
 const recommendedPosts = document.getElementById("recommended-posts");
 const recommendedPostsGrid = document.getElementById("recommended-posts-grid");
 
+let searchQuery = "";
+let activeTags = new Set();
+let sortOrder = "newest";
+let searchIndex = [];
+let searchIndexReady = false;
+
 function escapeHtml(value = "") {
     return value
         .replaceAll("&", "&amp;")
@@ -52,8 +58,8 @@ function renderPostCards(posts, container) {
                 ${localized.date ? `<span>${escapeHtml(formatDate(localized.date))}</span>` : ""}
                 ${localized.readingTime ? `<span class="post-card-reading-time" data-minutes="${escapeHtml(String(localized.readingTime))}">${escapeHtml(localized.readingTime)} ${escapeHtml(getTranslation("blog.minRead"))}</span>` : ""}
             </div>
-            <h2>${escapeHtml(localized.title)}</h2>
-            ${localized.description ? `<p>${escapeHtml(localized.description)}</p>` : ""}
+            <h2>${highlightText(localized.title, searchQuery)}</h2>
+            ${localized.description ? `<p>${highlightText(localized.description, searchQuery)}</p>` : ""}
             ${renderTags(localized.tags || post.tags || [])}
             <a class="post-card-link" href="${postUrl(post.slug)}">${escapeHtml(getTranslation("blog.readPost"))}</a>
         </article>
@@ -100,6 +106,191 @@ function renderTags(tags = []) {
             ${tags.map((tag) => `<span class="post-tag">${escapeHtml(tag)}</span>`).join("")}
         </div>
     `;
+}
+
+function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function highlightText(value, query) {
+    const escapedValue = escapeHtml(value);
+    const terms = query.trim().split(/\s+/).filter(Boolean);
+    if (!terms.length) return escapedValue;
+
+    const pattern = new RegExp(`(${terms.map(escapeRegExp).join("|")})`, "gi");
+    return escapedValue.replace(pattern, "<mark>$1</mark>");
+}
+
+function stripMarkdownToText(markdown) {
+    return markdown
+        .replace(/```[\s\S]*?```/g, " ")
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+        .replace(/<[^>]+>/g, " ")
+        .replace(/[#>*_`~-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function matchesSearch(item, query) {
+    if (!query) return true;
+
+    const terms = query.split(/\s+/).filter(Boolean);
+    const haystack = [
+        item.title,
+        item.description,
+        (item.tags || []).join(" "),
+        item.content,
+    ].join(" ").toLowerCase();
+
+    return terms.every((term) => haystack.includes(term));
+}
+
+function sortPosts(posts) {
+    const sortedPosts = [...posts];
+
+    if (sortOrder === "oldest") {
+        sortedPosts.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+    } else if (sortOrder === "title-asc" || sortOrder === "title-desc") {
+        sortedPosts.sort((a, b) => {
+            const titleA = getLocalizedPost(a)?.title || "";
+            const titleB = getLocalizedPost(b)?.title || "";
+            return sortOrder === "title-asc"
+                ? titleA.localeCompare(titleB)
+                : titleB.localeCompare(titleA);
+        });
+    } else {
+        sortedPosts.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    }
+
+    return sortedPosts;
+}
+
+function getFilteredPosts() {
+    const query = searchQuery.trim().toLowerCase();
+    const matchedSlugs = new Set();
+    const filteredPosts = [];
+
+    for (const item of searchIndex) {
+        if (!matchesSearch(item, query)) continue;
+        if (activeTags.size && ![...activeTags].every((tag) => (item.tags || []).includes(tag))) continue;
+        if (matchedSlugs.has(item.post.slug)) continue;
+
+        matchedSlugs.add(item.post.slug);
+        filteredPosts.push(item.post);
+    }
+
+    return sortPosts(filteredPosts);
+}
+
+async function buildSearchIndex(posts) {
+    const entries = await Promise.all(
+        posts.map(async (post) => {
+            const items = [];
+
+            for (const lang of ["en", "ar"]) {
+                const localized = post[lang];
+                if (!localized) continue;
+
+                let content = "";
+                try {
+                    const response = await fetch(localized.path, { cache: "no-cache" });
+                    if (response.ok) {
+                        const rawMarkdown = await response.text();
+                        content = stripMarkdownToText(parseFrontMatter(rawMarkdown).content);
+                    }
+                } catch {
+                    // Metadata-only search is still useful if a Markdown file cannot be fetched.
+                }
+
+                items.push({
+                    post,
+                    lang,
+                    title: localized.title || "",
+                    description: localized.description || "",
+                    date: localized.date || post.date || "",
+                    tags: localized.tags || post.tags || [],
+                    content,
+                });
+            }
+
+            return items;
+        }),
+    );
+
+    searchIndex = entries.flat();
+    searchIndexReady = true;
+    renderTagFilters();
+    renderSearchResults();
+}
+
+function renderTagFilters() {
+    const container = document.getElementById("blog-tag-filters");
+    if (!container) return;
+
+    const tagCounts = new Map();
+    for (const post of window.__blogPosts || []) {
+        for (const tag of post.tags || []) {
+            tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+        }
+    }
+
+    const tags = [...tagCounts.keys()].sort((a, b) => a.localeCompare(b));
+    container.innerHTML = tags
+        .map((tag) => {
+            const isActive = activeTags.has(tag);
+            return `
+                <button
+                    type="button"
+                    class="blog-tag-filter${isActive ? " active" : ""}"
+                    data-tag="${escapeHtml(tag)}"
+                    aria-pressed="${isActive}"
+                >
+                    ${escapeHtml(tag)} <span>${tagCounts.get(tag)}</span>
+                </button>
+            `;
+        })
+        .join("");
+
+    container.querySelectorAll(".blog-tag-filter").forEach((button) => {
+        button.addEventListener("click", () => {
+            const tag = button.dataset.tag;
+            if (activeTags.has(tag)) {
+                activeTags.delete(tag);
+            } else {
+                activeTags.add(tag);
+            }
+
+            renderTagFilters();
+            renderSearchResults();
+        });
+    });
+}
+
+function updateSearchStatus(posts) {
+    const status = document.getElementById("blog-search-status");
+    const clearButton = document.getElementById("blog-search-clear");
+    if (!status || !clearButton) return;
+
+    const hasSearch = Boolean(searchQuery.trim() || activeTags.size);
+    clearButton.hidden = !hasSearch;
+    status.hidden = !hasSearch;
+    if (!hasSearch) {
+        status.textContent = "";
+        return;
+    }
+
+    status.textContent = posts.length
+        ? getTranslation("blog.resultsFound").replace("{count}", String(posts.length))
+        : getTranslation("blog.noResults");
+}
+
+function renderSearchResults() {
+    if (!searchIndexReady) return;
+
+    const posts = getFilteredPosts();
+    renderPosts(posts);
+    updateSearchStatus(posts);
 }
 
 function resolveRelativeAssets(markdown, markdownPath) {
@@ -410,6 +601,14 @@ const blogTranslations = {
             recommendedEyebrow: "RECOMMENDED",
             recommendedTitle: "Recommended Posts",
             unable: "Unable to open post",
+            searchPlaceholder: "Search posts...",
+            searchClear: "Clear search",
+            sortNewest: "Newest",
+            sortOldest: "Oldest",
+            sortTitleAsc: "Title A–Z",
+            sortTitleDesc: "Title Z–A",
+            resultsFound: "{count} posts found",
+            noResults: "No posts found",
         },
     },
     ar: {
@@ -428,6 +627,14 @@ const blogTranslations = {
             recommendedEyebrow: "مقترحة لك",
             recommendedTitle: "مقالات مقترحة",
             unable: "تعذر فتح المقال",
+            searchPlaceholder: "ابحث في المقالات...",
+            searchClear: "مسح البحث",
+            sortNewest: "الأحدث",
+            sortOldest: "الأقدم",
+            sortTitleAsc: "العنوان أ–ي",
+            sortTitleDesc: "العنوان ي–أ",
+            resultsFound: "تم العثور على {count} مقالات",
+            noResults: "لم يتم العثور على مقالات",
         },
     },
 };
@@ -454,6 +661,25 @@ function setLanguage(lang) {
         langToggle.textContent = currentLanguage === "ar" ? "English" : "العربية";
     }
 
+    const searchInput = document.getElementById("blog-search-input");
+    if (searchInput) {
+        searchInput.placeholder = getTranslation("blog.searchPlaceholder");
+        searchInput.setAttribute("aria-label", getTranslation("blog.searchPlaceholder"));
+    }
+
+    const searchClear = document.getElementById("blog-search-clear");
+    if (searchClear) {
+        searchClear.setAttribute("aria-label", getTranslation("blog.searchClear"));
+    }
+
+    const sortSelect = document.getElementById("blog-sort");
+    if (sortSelect) {
+        sortSelect.options[0].textContent = getTranslation("blog.sortNewest");
+        sortSelect.options[1].textContent = getTranslation("blog.sortOldest");
+        sortSelect.options[2].textContent = getTranslation("blog.sortTitleAsc");
+        sortSelect.options[3].textContent = getTranslation("blog.sortTitleDesc");
+    }
+
     if (window.__blogPosts?.length) {
         const requestedSlug = getRequestedSlug();
         const currentPost = requestedSlug
@@ -463,7 +689,7 @@ function setLanguage(lang) {
         if (currentPost) {
             openPost(currentPost);
         } else {
-            renderPosts(window.__blogPosts);
+            renderSearchResults();
         }
     }
 }
@@ -517,6 +743,46 @@ function setupControls() {
     langToggle?.addEventListener("click", () => {
         setLanguage(currentLanguage === "en" ? "ar" : "en");
     });
+
+    const searchInput = document.getElementById("blog-search-input");
+    const searchClear = document.getElementById("blog-search-clear");
+    const sortSelect = document.getElementById("blog-sort");
+
+    searchInput?.addEventListener("input", () => {
+        window.__blogSearchTimer = setTimeout(() => {
+            searchQuery = searchInput.value;
+            renderSearchResults();
+        }, 150);
+    });
+
+    searchClear?.addEventListener("click", () => {
+        if (!searchInput) return;
+
+        searchInput.value = "";
+        searchQuery = "";
+        activeTags.clear();
+        renderTagFilters();
+        renderSearchResults();
+        searchInput.focus();
+    });
+
+    sortSelect?.addEventListener("change", () => {
+        sortOrder = sortSelect.value;
+        renderSearchResults();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        const activeTag = document.activeElement?.tagName || "";
+        const isTyping = /^(INPUT|TEXTAREA|SELECT)$/.test(activeTag);
+
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+            event.preventDefault();
+            searchInput?.focus();
+        } else if (event.key === "/" && !isTyping) {
+            event.preventDefault();
+            searchInput?.focus();
+        }
+    });
 }
 
 function setTheme(theme) {
@@ -550,7 +816,7 @@ async function initBlog() {
             throw new Error(`Post "${slug}" was not found.`);
         }
 
-        renderPosts(posts);
+        await buildSearchIndex(posts);
     } catch (error) {
         postsGrid.innerHTML = `<div class="post-error">${escapeHtml(error.message)}</div>`;
     }
