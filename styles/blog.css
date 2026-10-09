@@ -370,7 +370,7 @@
 .post-sidebar-inner.is-empty { display: none; }
 
 .post-main { min-width: 0; }
-.post-header { position: static !important; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--blog-line); }
+.post-header { position: static !important; margin-bottom: 3rem; padding: 2rem; border-bottom: 1px solid var(--blog-line); }
 .post-header h1 { max-width: 900px; margin: 0 0 1rem; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.08; letter-spacing: -.025em; }
 .post-header-meta { position: static !important; display: flex; gap: .65rem; flex-wrap: wrap; color: var(--text-secondary); font-size: .8rem; }
 .post-header-meta span + span::before { content: "·"; margin-right: .65rem; opacity: .55; }
