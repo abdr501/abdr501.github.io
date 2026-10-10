@@ -107,25 +107,7 @@ h2 {
 }
 
 
-h2::after {
-    content: '#';
-    color: var(--accent-primary);
-    margin-left: 0.25rem;
-    font-size: 1.25em;
-    /* Slightly larger */
-    vertical-align: middle;
-    /* Removed underline styles */
-    position: static;
-    width: auto;
-    height: auto;
-    background: none;
-    opacity: 1;
-}
 
-[lang="ar"] h2::after {
-    margin-right: 0.25rem;
-    margin-left: 0;
-}
 
 /* Layout */
 .container {
@@ -618,11 +600,11 @@ footer .footer-contact .container {
 
     h2 {
         font-size: 1.75rem;
-        text-align: center;
+        /* text-align: center; */
     }
 
     [lang="ar"] h2 {
-        text-align: center;
+        /* text-align: center; */
     }
 
     [lang="ar"] .hero {
