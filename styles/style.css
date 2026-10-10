@@ -271,7 +271,7 @@ nav {
 }
 
 [data-theme="dark"] .hero-image-window::after {
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(var(--accent-rgb), 0.35) 0%, transparent 70%);
 }
 
 .hero-image {
@@ -346,7 +346,7 @@ nav {
 }
 
 [data-theme="dark"] .btn:hover {
-    background-color: #3bfa81;
+    background-color: color-mix(in srgb, var(--accent-primary) 70%, #000000);
 }
 
 .btn-sm {
@@ -364,7 +364,7 @@ nav {
 /* Projects Grid */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: 2rem;
     padding: 3rem;
     background:
@@ -488,28 +488,23 @@ nav {
 }
 
 .tag {
-    background: #f3f4f6;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
+    padding: 0.22rem 0.55rem;
+    border: 1px dashed var(--glass-border);
+    border-radius: 999px;
+    background: transparent;
     color: var(--text-secondary);
-    border: 1px solid transparent;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 [data-theme="dark"] .tag {
-    background: #1f2937;
-    color: #d1d5db;
-}
-
-[data-theme="dark"] .project-card:hover .tag {
-    background: #374151;
-    border-color: #4b5563;
+    color: var(--text-secondary);
 }
 
 .project-card:hover .tag {
-    border-color: #e5e7eb;
-    background: #fff;
+    border-style: solid;
 }
 
 /* Contact */
@@ -1051,7 +1046,7 @@ ul li::marker {
 }
 
 [dir="rtl"] ul li::marker {
-    content: "� ";
+    content: "◂ ";
 }
 
 /* File folder tab style for section headers */
@@ -1288,6 +1283,7 @@ body.image-viewer-open { overflow:hidden; }
 @media (max-width:768px) {
     .projects-page { padding-top:7rem; }
     .projects-page-heading { text-align:center; }
+    .projects-grid { padding: 1rem; }
     .image-viewer { padding:4rem 1rem 1rem; }
     .image-viewer-stage { width:92vw; height:82vh; }
     .image-viewer-toolbar { top:.75rem; }
